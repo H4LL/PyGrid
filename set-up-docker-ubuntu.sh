@@ -45,3 +45,8 @@ sudo docker-compose up
 
 # Run jupyter notebook to interact with Grid network using tutorials
 # jupyter notebook --ip 0.0.0.0 --port 8888
+
+#RUN FROM OTHER TERMINAL
+
+# Records the performance statistiics at timestamps
+# while true; do sudo docker stats --no-stream | ts '[%H:%M:%S]' | tee --append stats.txt; sleep 0.5; done

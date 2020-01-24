@@ -6,12 +6,15 @@ services:
           resources:
             limits:
               cpus: '0.50'
-              memory: 512MB
+              memory: 512M
+            reservations:
+              cpus: '0.2'
+              memory: 20M
         environment:
                 - PORT=5000
                 - SECRET_KEY=ineedtoputasecrethere
                 - DATABASE_URL=sqlite:///databasegateway.db
-        network_mode: "bridge"
+        network_mode: "host"
 
 
     bob:
@@ -20,10 +23,10 @@ services:
           resources:
             limits:
               cpus: '0.50'
-              memory: 512MB
+              memory: 512M
             reservations:
               cpus: '0.2'
-              memory: 20MB
+              memory: 20M
         environment:
                 - GRID_NETWORK_URL=http://localhost:5000
                 - ID=Bob
@@ -32,7 +35,7 @@ services:
                 - PORT=3000
         depends_on:
                 - "gateway"
-        network_mode: "bridge"
+        network_mode: "host"
     alice:
         image: openmined/grid-node:latest
         deploy:
@@ -40,7 +43,10 @@ services:
             limits:
               cpus: '0.50'
               memory: 512M
-        environment:
+            reservations:
+              cpus: '0.2'
+              memory: 20M
+            environment:
                 - GRID_NETWORK_URL=http://localhost:5000
                 - ID=Alice
                 - ADDRESS=http://localhost:3001/
@@ -48,7 +54,7 @@ services:
                 - PORT=3001
         depends_on:
                 - "gateway"
-        network_mode: "bridge"
+        network_mode: "host"
     bill:
         image: openmined/grid-node:latest
         deploy:
@@ -56,6 +62,9 @@ services:
             limits:
               cpus: '0.50'
               memory: 512M
+            reservations:
+              cpus: '0.2'
+              memory: 20M
         environment:
                 - GRID_NETWORK_URL=http://localhost:5000
                 - ID=Bill
@@ -64,7 +73,7 @@ services:
                 - PORT=3002
         depends_on:
                 - "gateway"
-        network_mode: "bridge"
+        network_mode: "host"
     james:
         image: openmined/grid-node:latest
         deploy:
@@ -72,6 +81,9 @@ services:
             limits:
               cpus: '0.50'
               memory: 512M
+            reservations:
+              cpus: '0.2'
+              memory: 20M
         environment:
                 - GRID_NETWORK_URL=http://localhost:5000
                 - ID=James
@@ -80,4 +92,4 @@ services:
                 - PORT=3003
         depends_on:
                 - "gateway"
-        network_mode: "bridge"
+        network_mode: "host"
