@@ -11,7 +11,7 @@ services:
                 - PORT=5000
                 - SECRET_KEY=ineedtoputasecrethere
                 - DATABASE_URL=sqlite:///databasegateway.db
-        network_mode: "host"
+        network_mode: "bridge"
 
 
     bob:
@@ -32,7 +32,7 @@ services:
                 - PORT=3000
         depends_on:
                 - "gateway"
-        network_mode: "host"
+        network_mode: "bridge"
     alice:
         image: openmined/grid-node:latest
         deploy:
@@ -48,7 +48,7 @@ services:
                 - PORT=3001
         depends_on:
                 - "gateway"
-        network_mode: "host"
+        network_mode: "bridge"
     bill:
         image: openmined/grid-node:latest
         deploy:
@@ -64,7 +64,7 @@ services:
                 - PORT=3002
         depends_on:
                 - "gateway"
-        network_mode: "host"
+        network_mode: "bridge"
     james:
         image: openmined/grid-node:latest
         deploy:
@@ -80,4 +80,4 @@ services:
                 - PORT=3003
         depends_on:
                 - "gateway"
-        network_mode: "host"
+        network_mode: "bridge"
