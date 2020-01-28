@@ -42,11 +42,14 @@ sudo docker build -t openmined/grid-gateway ./gateway/
 sudo docker-compose up
 
 #RUN FROM OTHER TERMINAL
-
 # Run jupyter notebook to interact with Grid network using tutorials
+# conda activate pysyft
 # jupyter notebook --ip 0.0.0.0 --port 8888
 
 #RUN FROM OTHER TERMINAL
-
-# Records the performance statistiics at timestamps
+# Records the performance statistics of each docker host at timestamps
 # while true; do sudo docker stats --no-stream | ts '[%H:%M:%S]' | tee --append stats.txt; sleep 0.5; done
+
+#RUN FROM OTHER TERMINAL
+# Records the network data on loopback interface
+# sudo tcpdump -i lo
