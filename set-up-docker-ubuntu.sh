@@ -52,4 +52,4 @@ sudo docker-compose up
 
 #RUN FROM OTHER TERMINAL
 # Records the network data on loopback interface
-# sudo tcpdump -i lo
+# sudo tcpdump -i lo | tee traffic.pcap
