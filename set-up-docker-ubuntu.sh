@@ -5,6 +5,7 @@ sudo apt update
 
 #Get GCC
 sudo apt install gcc
+sudo apt install moreutils
 
 #Install Docker
 sudo snap install docker
@@ -26,15 +27,19 @@ pip install --upgrade --force-reinstall zstd
 cd ~
 git clone https://github.com/OpenMined/PySyft.git
 cd PySyft/
+git checkout 79d1507cd90435a0203b07fc670699507fade7c5
 pip install .
 
 #Install PyGrid
 cd ~
 git clone https://github.com/OpenMined/PyGrid.git
 cd PyGrid
+git checkout 728f99b07669af795907d1e6d88fe3ceab9ac955
 pip install .
 
 #Build node and gateway images
+
+sed -i -e 's,git+git://github.com/OpenMined/PySyft@master,git+git://github.com/OpenMined/PySyft@79d1507cd90435a0203b07fc670699507fade7c5,g' ./app/websocket/requirements.txt
 sudo docker build -t openmined/grid-node ./app/websocket/
 sudo docker build -t openmined/grid-gateway ./gateway/
 
@@ -44,6 +49,7 @@ sudo docker-compose up
 #RUN FROM OTHER TERMINAL
 # Run jupyter notebook to interact with Grid network using tutorials
 # conda activate pysyft
+# cd ~/PyGrid
 # jupyter notebook --ip 0.0.0.0 --port 8888
 
 #RUN FROM OTHER TERMINAL
