@@ -36,6 +36,7 @@ git clone https://github.com/OpenMined/PyGrid.git
 cd PyGrid
 git checkout 728f99b07669af795907d1e6d88fe3ceab9ac955
 pip install .
+pip install tqdm
 
 #Build node and gateway images
 
@@ -45,6 +46,12 @@ sudo docker build -t openmined/grid-gateway ./gateway/
 
 # Run envirnment from docker-compose.yml file
 sudo docker-compose up
+
+DONE=0
+DONE=$((python connect_nodes.py) 2> &1) &
+while [ $DONE -ne "1" ]; do
+  sudo docker stats --no-stream | ts '[%H:%M:%S]' | tee --append ../connect_stats.txt; sleep 0.5;
+done
 
 #RUN FROM OTHER TERMINAL
 # Run jupyter notebook to interact with Grid network using tutorials
