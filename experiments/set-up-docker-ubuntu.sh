@@ -44,14 +44,37 @@ sed -i -e 's,git+git://github.com/OpenMined/PySyft@master,git+git://github.com/O
 sudo docker build -t openmined/grid-node ./app/websocket/
 sudo docker build -t openmined/grid-gateway ./gateway/
 
+
+#SINGLE EXECUTION EXPERIMENT
+
+#SET UP SUBNET
+sudo docker-compose up &
+SUBNET=$!
+
+#DISTRIBUTE DATA
+while true; do sudo docker stats --no-stream | ts '[%H:%M:%S]' | tee --append connect_stats.txt; sleep 0.5; done &
+STATS=$!
+python connect_nodes.py > connect_nodes_output.txt
+sudo kill -9 "$STATS"
+
+#TRAIN ON DATA
+while true; do sudo docker stats --no-stream | ts '[%H:%M:%S]' | tee --append train_stats.txt; sleep 0.5; done &
+STATS=$!
+python learn_from_grid.py > learn_from_grid_output.txt
+sudo kill -9 "$STATS"
+
+#TEAR DOWN SUBNET
+sudo kill -9 "$SUBNET"
+
+
+
+# TESTING BUILD PROCESS
+
 # Run envirnment from docker-compose.yml file
 sudo docker-compose up
 
-DONE=0
-DONE=$((python connect_nodes.py) 2> &1) &
-while [ $DONE -ne "1" ]; do
-  sudo docker stats --no-stream | ts '[%H:%M:%S]' | tee --append ../connect_stats.txt; sleep 0.5;
-done
+#RUN FROM OTHER TERMINAL
+# while true; do sudo docker stats --no-stream | ts '[%H:%M:%S]' | tee --append ../connect_stats.txt; sleep 0.5; done
 
 #RUN FROM OTHER TERMINAL
 # Run jupyter notebook to interact with Grid network using tutorials

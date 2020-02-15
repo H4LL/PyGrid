@@ -37,7 +37,8 @@ model.to(device)
 optimizer = optim.SGD(model.parameters(), lr=0.01)
 criterion = nn.CrossEntropyLoss()
 
-#CONNECT TO GRID SUBNET
+#CONNECT TO GRID
+GRID_ADDRESS = 'localhost'
 GRID_PORT = '5000'
 my_grid = gr.GridNetwork("http://" + GRID_ADDRESS + ":" + GRID_PORT)
 
@@ -55,9 +56,9 @@ def epoch_total_size(data):
 
     return total
 
-    N_EPOCS = 3
-    SAVE_MODEL = True
-    SAVE_MODEL_PATH = './models'
+N_EPOCS = 3
+SAVE_MODEL = True
+SAVE_MODEL_PATH = '.'
 
 def train(epoch):
     model.train()
