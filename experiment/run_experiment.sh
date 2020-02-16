@@ -2,7 +2,6 @@
 
 #Build node and gateway images
 cd ~/PyGrid
-mkdir experiment/results
 conda activate pysyft
 sed -i -e 's,git+git://github.com/OpenMined/PySyft@master,git+git://github.com/OpenMined/PySyft@79d1507cd90435a0203b07fc670699507fade7c5,g' ./app/websocket/requirements.txt
 sudo docker build -t openmined/grid-node ./app/websocket/
